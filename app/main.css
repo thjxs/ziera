@@ -1,1 +1,7 @@
 @tailwind base;
+@tailwind components;
+@tailwind utilities;
+.main-header {
+    height: 64px;
+    @apply bg-transparent;
+}

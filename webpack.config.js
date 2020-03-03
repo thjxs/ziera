@@ -1,11 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const web = {
   target: 'web',
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist')
+  },
   entry: {
     app: ['./app/main.js']
   },
@@ -40,5 +44,5 @@ const web = {
 };
 
 module.exports = (env, argv) => {
-  return [web]
-}
+  return [web];
+};

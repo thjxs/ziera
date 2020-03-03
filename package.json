@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf dist/",
     "build": "npm run clean && webpack",
+    "start": "webpack-dev-server --open",
     "format": "prettier **/*.js --single-quote --write"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "rimraf": "^3.0.2",
     "tailwindcss": "^1.2.0",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   }
 }
