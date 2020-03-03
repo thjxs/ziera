@@ -36,6 +36,7 @@ const web = {
     ]
   },
   plugins: [
+    new CopyPlugin([{ context: 'public', from: '*.*' }]),
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css'

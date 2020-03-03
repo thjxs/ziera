@@ -7,7 +7,7 @@
     "clean": "rimraf dist/",
     "build": "npm run clean && webpack",
     "start": "webpack-dev-server --open",
-    "format": "prettier **/*.js --single-quote --write"
+    "format": "prettier app/**/*.js --single-quote --write"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
