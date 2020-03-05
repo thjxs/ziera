@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rimraf dist/",
     "build": "npm run clean && webpack",
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server",
     "format": "prettier app/**/*.js --single-quote --write"
   },
   "dependencies": {
