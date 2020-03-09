@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const web = {
   target: 'web',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: path.join(__dirname, 'dist')
   },
@@ -20,6 +20,16 @@ const web = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
       {
         test: /\.css$/,
         use: [
