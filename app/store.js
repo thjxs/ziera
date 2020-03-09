@@ -1,19 +1,26 @@
+function initClock() {
+  let c = new Date();
+  let m = c.getMilliseconds();
+  return 1000 - m;
+}
+function decTime(value) {
+  return value < 10 ? '0' + value : value;
+}
+
+function getTime() {
+  let time = new Date();
+  return `${time.getHours()} : ${decTime(time.getMinutes())}`;
+}
+
 function updateClock(emitter) {
-  let tm;
   let timer = setInterval(() => {
-    let time = new Date();
-    let hours = time.getHours();
-    let min = time.getMinutes();
-    if (tm !== min) {
-      tm = min;
-      emitter.emit('clock', `${hours} : ${min}`);
-    }
-  }, 100);
+    emitter.emit('clock', getTime());
+  }, 1000);
 }
 
 let targetDate = new Date('2020-06-20T00:00:00');
 
-function updateCountdown() {
+function getCountdown() {
   let currentDate = new Date();
   currentDate.getFullYear();
   let diff = targetDate - currentDate;
@@ -26,8 +33,9 @@ function updateCountdown() {
 module.exports = function(state, emitter) {
   let clockTimer;
   let countdownTimer;
-  state.clock = '--:--';
-  state.countdown = updateCountdown();
+
+  state.clock = getTime();
+  state.countdown = getCountdown();
 
   function render() {
     emitter.emit('render');
@@ -40,13 +48,19 @@ module.exports = function(state, emitter) {
     state.clock = v;
     render();
   });
-  emitter.on('countdown', () => {
-    state.countdown = updateCountdown();
+  emitter.on('countdown', v => {
+    state.countdown = v;
   });
   emitter.on('DOMContentLoaded', () => {
-    updateClock(emitter);
+    window.addEventListener('beforeunload', function(e) {
+      this.clearInterval(clockTimer);
+      this.clearInterval(countdownTimer);
+    });
+    setTimeout(() => {
+      clockTimer = updateClock(emitter);
+    }, initClock());
     countdownTimer = setInterval(() => {
-      emitter.emit('countdown');
+      emitter.emit('countdown', getCountdown());
     }, 1000 * 60 * 60);
   });
 };
