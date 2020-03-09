@@ -1,15 +1,30 @@
+let hours;
+let min;
+let sec;
 function initClock() {
-  let c = new Date();
-  let m = c.getMilliseconds();
-  return 1000 - m;
+  return 1e3 - (new Date).getMilliseconds()
 }
 function decTime(value) {
   return value < 10 ? '0' + value : value;
 }
 
 function getTime() {
-  let time = new Date();
-  return `${time.getHours()} : ${decTime(time.getMinutes())}`;
+  if (sec === 59) {
+    sec = 0
+    if (min === 59) {
+      min = 0
+      if (hours === 23) {
+        hours = 0
+      } else {
+        hours += 1
+      }
+    } else {
+      min += 1
+    }
+  } else {
+    sec += 1
+  }
+  return `${hours} : ${decTime(min)}`
 }
 
 function updateClock(emitter) {
@@ -33,6 +48,10 @@ function getCountdown() {
 module.exports = function(state, emitter) {
   let clockTimer;
   let countdownTimer;
+  let c = new Date();
+  hours = c.getHours()
+  min = c.getMinutes()
+  sec = c.getSeconds()
 
   state.clock = getTime();
   state.countdown = getCountdown();
