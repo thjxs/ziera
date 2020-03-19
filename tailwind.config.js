@@ -27,5 +27,8 @@ module.exports = {
       '4xl': '2.25rem', // 36px
       '5xl': '3rem' // 48px
     },
+  },
+  variants: {
+    position: ['responsive', 'hover', 'focus']
   }
 };

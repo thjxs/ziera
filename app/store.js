@@ -34,11 +34,15 @@ function updateClock(emitter) {
 }
 
 let targetDate = new Date('2020-06-20T00:00:00');
+let startDate = new Date('2019-09-06T00:00:00');
 
-function getCountdown() {
+function getCountdown(t) {
   let currentDate = new Date();
   currentDate.getFullYear();
-  let diff = targetDate - currentDate;
+  let diff = t - currentDate;
+  if (diff < 0) {
+    diff = -diff
+  }
   let day = Math.floor(diff / 60 / 60 / 1000 / 24);
   let hours = Math.floor(diff / 60 / 60 / 1000) % 24;
 
@@ -54,7 +58,8 @@ module.exports = function(state, emitter) {
   sec = c.getSeconds()
 
   state.clock = getTime();
-  state.countdown = getCountdown();
+  state.countdown = getCountdown(targetDate);
+  state.together = getCountdown(startDate)
 
   function render() {
     emitter.emit('render');
