@@ -6,6 +6,12 @@
     @apply bg-transparent;
 }
 
+.hover {
+    right: 12px;
+    width: 12px;
+    height: 12px;
+}
+
 .hover:hover #together {
     display: block;
     width: 233px;

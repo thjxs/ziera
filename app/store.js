@@ -2,7 +2,7 @@ let hours;
 let min;
 let sec;
 function initClock() {
-  return 1e3 - (new Date).getMilliseconds()
+  return 1e3 - new Date().getMilliseconds();
 }
 function decTime(value) {
   return value < 10 ? '0' + value : value;
@@ -10,21 +10,21 @@ function decTime(value) {
 
 function getTime() {
   if (sec === 59) {
-    sec = 0
+    sec = 0;
     if (min === 59) {
-      min = 0
+      min = 0;
       if (hours === 23) {
-        hours = 0
+        hours = 0;
       } else {
-        hours += 1
+        hours += 1;
       }
     } else {
-      min += 1
+      min += 1;
     }
   } else {
-    sec += 1
+    sec += 1;
   }
-  return `${hours} : ${decTime(min)}`
+  return `${hours} : ${decTime(min)}`;
 }
 
 function updateClock(emitter) {
@@ -41,7 +41,7 @@ function getCountdown(t) {
   currentDate.getFullYear();
   let diff = t - currentDate;
   if (diff < 0) {
-    diff = -diff
+    diff = -diff;
   }
   let day = Math.floor(diff / 60 / 60 / 1000 / 24);
   let hours = Math.floor(diff / 60 / 60 / 1000) % 24;
@@ -53,13 +53,13 @@ module.exports = function(state, emitter) {
   let clockTimer;
   let countdownTimer;
   let c = new Date();
-  hours = c.getHours()
-  min = c.getMinutes()
-  sec = c.getSeconds()
+  hours = c.getHours();
+  min = c.getMinutes();
+  sec = c.getSeconds();
 
   state.clock = getTime();
   state.countdown = getCountdown(targetDate);
-  state.together = getCountdown(startDate)
+  state.together = getCountdown(startDate);
 
   function render() {
     emitter.emit('render');
