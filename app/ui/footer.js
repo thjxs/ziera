@@ -14,7 +14,7 @@ class Footer extends Component {
 
   createElement() {
     return html`
-      <footer>I'm footer</footer>
+      <footer><img class="block ml-auto mr-8" src="gp.png" /></footer>
     `;
   }
 }
