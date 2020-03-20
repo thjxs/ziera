@@ -75,6 +75,9 @@ module.exports = function(state, emitter) {
   emitter.on('countdown', v => {
     state.countdown = v;
   });
+  emitter.on('together', v => {
+    state.together = v
+  })
   emitter.on('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', function(e) {
       this.clearInterval(clockTimer);
@@ -84,7 +87,8 @@ module.exports = function(state, emitter) {
       clockTimer = updateClock(emitter);
     }, initClock());
     countdownTimer = setInterval(() => {
-      emitter.emit('countdown', getCountdown());
+      emitter.emit('countdown', getCountdown(targetDate));
+      emitter.emit('together', getCountdown(startDate))
     }, 1000 * 60 * 60);
   });
 };
