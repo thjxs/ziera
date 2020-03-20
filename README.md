@@ -1,3 +1,2 @@
 # ziera
-A custom desktop for Wallpaper Engine
-Using HTML, CSS and JavaScript
+A custom desktop for Wallpaper Engine, using HTML, CSS and JavaScript
