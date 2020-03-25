@@ -49,7 +49,7 @@ function getCountdown(t) {
   return `${day} days, ${hours} hours`;
 }
 
-module.exports = function(state, emitter) {
+module.exports = function (state, emitter) {
   let clockTimer;
   let countdownTimer;
   let c = new Date();
@@ -64,22 +64,22 @@ module.exports = function(state, emitter) {
   function render() {
     emitter.emit('render');
   }
-  emitter.on('visible', v => {
+  emitter.on('visible', (v) => {
     state.visible = v;
     render();
   });
-  emitter.on('clock', v => {
+  emitter.on('clock', (v) => {
     state.clock = v;
     render();
   });
-  emitter.on('countdown', v => {
+  emitter.on('countdown', (v) => {
     state.countdown = v;
   });
-  emitter.on('together', v => {
-    state.together = v
-  })
+  emitter.on('together', (v) => {
+    state.together = v;
+  });
   emitter.on('DOMContentLoaded', () => {
-    window.addEventListener('beforeunload', function(e) {
+    window.addEventListener('beforeunload', function (e) {
       this.clearInterval(clockTimer);
       this.clearInterval(countdownTimer);
     });
@@ -88,7 +88,7 @@ module.exports = function(state, emitter) {
     }, initClock());
     countdownTimer = setInterval(() => {
       emitter.emit('countdown', getCountdown(targetDate));
-      emitter.emit('together', getCountdown(startDate))
+      emitter.emit('together', getCountdown(startDate));
     }, 1000 * 60 * 60);
   });
 };

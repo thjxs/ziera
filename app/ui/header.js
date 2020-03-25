@@ -13,9 +13,7 @@ class Header extends Component {
   }
 
   createElement() {
-    return html`
-      <header class="main-header">Header</header>
-    `;
+    return html` <header class="main-header">Header</header> `;
   }
 }
 module.exports = Header;
