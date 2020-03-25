@@ -9,6 +9,17 @@
     "start": "webpack-dev-server",
     "format": "prettier app/**/*.js --single-quote --write"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --single-quote",
+      "jshint"
+    ]
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "choo": "^7.1.0",
@@ -24,6 +35,9 @@
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "html-webpack-plugin": "^4.0.0",
+    "husky": "^4.2.3",
+    "jshint": "^2.11.0",
+    "lint-staged": "^10.0.9",
     "mini-css-extract-plugin": "^0.9.0",
     "postcss-loader": "^3.0.0",
     "prettier": "^2.0.2",
