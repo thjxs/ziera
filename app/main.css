@@ -30,3 +30,9 @@
     transition: all .3s;
     overflow: hidden;
 }
+
+@media (min-width: 1900px) {
+    body {
+        padding: 160px;
+    }
+}
