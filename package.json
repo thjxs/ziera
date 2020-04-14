@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf dist/",
-    "build": "npm run clean && webpack",
+    "build": "npm run clean && webpack --mode=production",
     "start": "webpack-dev-server",
     "format": "prettier app/**/*.js --single-quote --write"
   },
