@@ -1,73 +1,21 @@
-let hours;
-let min;
-let sec;
-function initClock() {
-  return 1e3 - new Date().getMilliseconds();
-}
-function decTime(value) {
-  return value < 10 ? '0' + value : value;
-}
+const timeUtils = require('./utils');
 
-function getTime() {
-  if (sec === 59) {
-    sec = 0;
-    if (min === 59) {
-      min = 0;
-      if (hours === 23) {
-        hours = 0;
-      } else {
-        hours += 1;
-      }
-    } else {
-      min += 1;
-    }
-  } else {
-    sec += 1;
-  }
-  return `${hours} : ${decTime(min)}`;
-}
-
-function updateClock(emitter) {
-  let timer = setInterval(() => {
-    emitter.emit('clock', getTime());
-  }, 1000);
-}
-
+const minTimeout = 1000 * 60;
+const hourTimeout = 1000 * 60 * 60;
 let targetDate = new Date('2020-06-20T00:00:00');
 let startDate = new Date('2019-09-06T00:00:00');
-
-function getCountdown(t) {
-  let currentDate = new Date();
-  currentDate.getFullYear();
-  let diff = t - currentDate;
-  if (diff < 0) {
-    diff = -diff;
-  }
-  let day = Math.floor(diff / 60 / 60 / 1000 / 24);
-  let hours = Math.floor(diff / 60 / 60 / 1000) % 24;
-
-  return `${day} days, ${hours} hours`;
-}
+let clockTimer;
+let countdownTimer;
 
 module.exports = function (state, emitter) {
-  let clockTimer;
-  let countdownTimer;
-  let c = new Date();
-  hours = c.getHours();
-  min = c.getMinutes();
-  sec = c.getSeconds();
-
-  state.clock = getTime();
-  state.countdown = getCountdown(targetDate);
-  state.together = getCountdown(startDate);
+  state.clock = timeUtils.getTime();
+  state.countdown = timeUtils.getCountdown(targetDate);
+  state.together = timeUtils.getCountdown(startDate);
 
   function render() {
     emitter.emit('render');
   }
-  emitter.on('visible', (v) => {
-    state.visible = v;
-    render();
-  });
+
   emitter.on('clock', (v) => {
     state.clock = v;
     render();
@@ -84,11 +32,14 @@ module.exports = function (state, emitter) {
       this.clearInterval(countdownTimer);
     });
     setTimeout(() => {
-      clockTimer = updateClock(emitter);
-    }, initClock());
+      emitter.emit('clock', timeUtils.getTime());
+      clockTimer = setInterval(() => {
+        emitter.emit('clock', timeUtils.getTime());
+      }, minTimeout);
+    }, timeUtils.reachMinTimeout());
     countdownTimer = setInterval(() => {
-      emitter.emit('countdown', getCountdown(targetDate));
-      emitter.emit('together', getCountdown(startDate));
-    }, 1000 * 60 * 60);
+      emitter.emit('countdown', timeUtils.getCountdown(targetDate));
+      emitter.emit('together', timeUtils.getCountdown(startDate));
+    }, hourTimeout);
   });
 };
