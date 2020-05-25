@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "clean": "rimraf dist/",
-    "build": "npm run clean && webpack --mode=production",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --mode=production",
     "start": "webpack-dev-server",
     "format": "prettier app/**/*.js --single-quote --write"
   },
@@ -34,7 +34,8 @@
     "@babel/preset-env": "^7.8.7",
     "@fullhuman/postcss-purgecss": "^2.1.0",
     "babel-loader": "^8.0.6",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^6.0",
+    "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "html-webpack-plugin": "^4.0.0",

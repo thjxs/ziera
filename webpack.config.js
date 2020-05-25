@@ -8,15 +8,15 @@ const web = {
   target: 'web',
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist')
+    contentBase: path.join(__dirname, 'dist'),
   },
   entry: {
-    app: ['./app/main.js']
+    app: ['./app/main.js'],
   },
   output: {
     chunkFilename: '[name].[contenthash:8].js',
     filename: '[name].[contenthash:8].js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -26,9 +26,9 @@ const web = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
-        }
+            presets: ['@babel/preset-env'],
+          },
+        },
       },
       {
         test: /\.css$/,
@@ -37,21 +37,21 @@ const web = {
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1
-            }
+              importLoaders: 1,
+            },
           },
-          'postcss-loader'
-        ]
-      }
-    ]
+          'postcss-loader',
+        ],
+      },
+    ],
   },
   plugins: [
-    new CopyPlugin([{ context: 'public', from: '*.*' }]),
+    new CopyPlugin({ patterns: [{ from: 'public', to: 'dist' }] }),
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash:8].css'
-    })
-  ]
+      filename: '[name].[contenthash:8].css',
+    }),
+  ],
 };
 
 module.exports = (env, argv) => {
