@@ -1,7 +1,7 @@
 /**
  * remaining seconds
  */
-function reachMinTimeout() {
+export function reachMinTimeout() {
   let t = new Date();
   return 60 * 1e3 - t.getSeconds() * 1e3 - t.getMilliseconds();
 }
@@ -17,7 +17,7 @@ function decTime(value) {
 /**
  * get current time
  */
-function getTime() {
+export function getTime() {
   let t = new Date();
   let h = t.getHours();
   let min = t.getMinutes();
@@ -28,7 +28,7 @@ function getTime() {
  * get countdown of target date
  * @param {Date} t
  */
-function getCountdown(t) {
+export function getCountdown(t) {
   let currentDate = new Date();
   currentDate.getFullYear();
   let diff = t - currentDate;
@@ -40,9 +40,3 @@ function getCountdown(t) {
 
   return `${day} days, ${hours} hours`;
 }
-
-module.exports = {
-  reachMinTimeout,
-  getTime,
-  getCountdown,
-};

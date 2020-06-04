@@ -46,7 +46,7 @@ const web = {
     ],
   },
   plugins: [
-    new CopyPlugin({ patterns: [{ from: 'public', to: 'dist' }] }),
+    new CopyPlugin({ patterns: [{ from: 'public', to: './' }] }),
     new HtmlWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',

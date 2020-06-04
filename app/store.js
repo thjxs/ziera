@@ -1,4 +1,4 @@
-const timeUtils = require('./utils');
+import * as timeUtils from './utils';
 
 const minTimeout = 1000 * 60;
 const hourTimeout = 1000 * 60 * 60;
@@ -7,7 +7,7 @@ let startDate = new Date('2019-09-06T00:00:00');
 let clockTimer;
 let countdownTimer;
 
-module.exports = function (state, emitter) {
+export default function (state, emitter) {
   state.clock = timeUtils.getTime();
   state.countdown = timeUtils.getCountdown(targetDate);
   state.together = timeUtils.getCountdown(startDate);
@@ -42,4 +42,4 @@ module.exports = function (state, emitter) {
       emitter.emit('together', timeUtils.getCountdown(startDate));
     }, hourTimeout);
   });
-};
+}

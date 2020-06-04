@@ -1,5 +1,5 @@
-const html = require('choo/html');
-const Component = require('choo/component');
+import html from 'choo/html';
+import Component from 'choo/component';
 
 class Footer extends Component {
   constructor(name, state, emit) {
@@ -19,4 +19,4 @@ class Footer extends Component {
   }
 }
 
-module.exports = Footer;
+export default Footer;
