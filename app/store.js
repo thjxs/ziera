@@ -33,7 +33,7 @@ export default function (state, emitter) {
       if (document.hidden) {
         timer.clear();
       } else {
-        timer.init();
+        timer.update();
       }
     });
     timer.init();

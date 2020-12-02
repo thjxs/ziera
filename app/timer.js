@@ -15,18 +15,32 @@ class Timer {
     clearInterval(this.countdownTimerId);
   }
 
+  emitClock() {
+    this.emitter.emit('clock', getTime());
+  }
+
+  emitCountdown() {
+    this.emitter.emit('countdown', getCountdown(this.targetDate));
+    this.emitter.emit('together', since(this.together));
+  }
+
   init() {
     setTimeout(() => {
-      this.emitter.emit('clock', getTime());
+      this.emitClock();
       this.clockTimerId = setInterval(() => {
-        this.emitter.emit('clock', getTime());
+        this.emitClock();
       }, minTimeout);
     }, reachMinTimeout());
 
     this.countdownTimerId = setInterval(() => {
-      this.emitter.emit('countdown', getCountdown(this.targetDate));
-      this.emitter.emit('together', since(this.together));
+      this.emitCountdown();
     }, hourTimeout);
+  }
+
+  update() {
+    this.emitCountdown();
+    this.emitClock();
+    this.init();
   }
 }
 
