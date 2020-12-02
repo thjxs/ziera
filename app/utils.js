@@ -26,17 +26,29 @@ export function getTime() {
 
 /**
  * get countdown of target date
- * @param {Date} t
+ * @param {Object} t
  */
 export function getCountdown(t) {
-  let currentDate = new Date();
-  currentDate.getFullYear();
-  let diff = t - currentDate;
-  if (diff < 0) {
-    diff = -diff;
+  let now = new Date();
+  let y = now.getFullYear();
+  let r = new Date(y, t.monthIndex, t.day);
+  if (r - now < 0) {
+    r = new Date(y + 1, t.monthIndex, t.day);
   }
-  let day = Math.floor(diff / 60 / 60 / 1000 / 24);
-  let hours = Math.floor(diff / 60 / 60 / 1000) % 24;
+  const diff = r - now;
+  return formattedDate(diff);
+}
+
+export function since(date) {
+  const now = Date.now();
+  const diff = now - date;
+
+  return formattedDate(diff);
+}
+
+function formattedDate(diff) {
+  const day = Math.floor(diff / 60 / 60 / 1000 / 24);
+  const hours = Math.floor(diff / 60 / 60 / 1000) % 24;
 
   return `${day} days, ${hours} hours`;
 }

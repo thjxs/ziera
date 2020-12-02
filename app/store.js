@@ -1,16 +1,14 @@
+import Timer from './timer';
 import * as timeUtils from './utils';
 
-const minTimeout = 1000 * 60;
-const hourTimeout = 1000 * 60 * 60;
-let targetDate = new Date('2020-06-20T00:00:00');
+let targetDate = { monthIndex: 5, day: 20 };
 let startDate = new Date('2019-09-06T00:00:00');
-let clockTimer;
-let countdownTimer;
 
 export default function (state, emitter) {
+  const timer = new Timer(emitter, targetDate, startDate);
   state.clock = timeUtils.getTime();
   state.countdown = timeUtils.getCountdown(targetDate);
-  state.together = timeUtils.getCountdown(startDate);
+  state.together = timeUtils.since(startDate);
 
   function render() {
     emitter.emit('render');
@@ -28,18 +26,16 @@ export default function (state, emitter) {
   });
   emitter.on('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', function (e) {
-      this.clearInterval(clockTimer);
-      this.clearInterval(countdownTimer);
+      timer.clear();
     });
-    setTimeout(() => {
-      emitter.emit('clock', timeUtils.getTime());
-      clockTimer = setInterval(() => {
-        emitter.emit('clock', timeUtils.getTime());
-      }, minTimeout);
-    }, timeUtils.reachMinTimeout());
-    countdownTimer = setInterval(() => {
-      emitter.emit('countdown', timeUtils.getCountdown(targetDate));
-      emitter.emit('together', timeUtils.getCountdown(startDate));
-    }, hourTimeout);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        timer.clear();
+      } else {
+        timer.init();
+      }
+    });
+    timer.init();
   });
 }
