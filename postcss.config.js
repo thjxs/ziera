@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: [require('tailwindcss'), require('cssnano')],
+  plugins: ['tailwindcss', 'cssnano'],
 };
