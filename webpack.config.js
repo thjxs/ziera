@@ -5,10 +5,13 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const web = {
+  mode: 'development',
   target: 'web',
   devtool: 'source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
   },
   entry: {
     app: ['./app/main.js'],
