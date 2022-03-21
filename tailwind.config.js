@@ -6,7 +6,7 @@ const colors = {
 };
 
 module.exports = {
-  purge: ['./app/ui/*.js'],
+  content: ['./app/ui/*.js'],
   theme: {
     colors: colors,
     backgroundColor: colors,
