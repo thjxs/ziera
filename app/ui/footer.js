@@ -14,7 +14,14 @@ class Footer extends Component {
 
   createElement() {
     return html`
-      <footer><img class="block ml-auto mr-8" src="gp.png" /></footer>
+      <footer class="relative">
+        <div class="hover absolute">
+          <div id="together" class="absolute">
+            <p>${this.state.together}</p>
+          </div>
+        </div>
+        <img class="block ml-auto mr-8" src="gp.png" />
+      </footer>
     `;
   }
 }
